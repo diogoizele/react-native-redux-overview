@@ -1,19 +1,20 @@
 import { StyleSheet } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Button } from "@/components/ui/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { IconSymbol } from "../../components/ui/IconSymbol";
+import { IconSymbol } from "@/components/ui/IconSymbol";
+import { AppDispatch } from "@/stores/store";
 import {
   decrement,
+  decrementAsync,
   increment,
   incrementAsync,
   reset,
   selectCount,
-} from "../../stores/toolkit/counterSlice";
-import { AppDispatch } from "../../stores/toolkit/store";
+} from "@/stores/toolkit/counterSlice";
 
 export default function HomeScreen() {
   const counterState = useSelector(selectCount);
@@ -36,7 +37,7 @@ export default function HomeScreen() {
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="defaultSemiBold">Toolkit Counter:</ThemedText>
-        <ThemedText>{counterState.value}</ThemedText>
+        <ThemedText>{counterState.toolkit.value}</ThemedText>
       </ThemedView>
       <ThemedView style={styles.actionContainer}>
         <Button type="toolkit" onPress={() => dispatch(increment())}>
@@ -48,8 +49,11 @@ export default function HomeScreen() {
         <Button type="toolkit" onPress={() => dispatch(incrementAsync())}>
           Increment Async
         </Button>
+        <Button type="toolkit" onPress={() => dispatch(decrementAsync())}>
+          Decrement Async
+        </Button>
         <Button type="toolkit" onPress={() => dispatch(reset())}>
-         Reset
+          Reset
         </Button>
       </ThemedView>
     </ParallaxScrollView>
@@ -75,6 +79,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   actionContainer: {
-    gap: 8,
+    gap: 16,
   },
 });

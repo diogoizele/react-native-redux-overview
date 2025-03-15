@@ -1,3 +1,5 @@
+import "react-native-reanimated";
+
 import {
   DarkTheme,
   DefaultTheme,
@@ -8,12 +10,11 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import "react-native-reanimated";
-
-import { useColorScheme } from "@/hooks/useColorScheme";
 import { Provider } from "react-redux";
-import { Loader } from "../components/ui/Loader";
-import { store } from "../stores/toolkit/store";
+
+import { Loader } from "@/components/ui/Loader";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { store } from "@/stores/store";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();

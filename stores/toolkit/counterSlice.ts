@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Alert } from "react-native";
-import { incrementAsynchronous } from "../../api/counter";
-import { AppThunk, RootState } from "./store";
 
-export interface CounterState {
-  value: number;
-  status: "idle" | "loading" | "failed";
-}
+import { RootState } from "../store";
+import { CounterState } from "../types";
+import * as thunks from "./thunks";
+
+export * from "./thunks";
 
 const initialState: CounterState = {
   value: 0,
@@ -36,6 +34,19 @@ export const counterSlice = createSlice({
       state.status = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(thunks.decrementAsync.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(thunks.decrementAsync.fulfilled, (state, action) => {
+        state.value = action.payload;
+        state.status = "idle";
+      })
+      .addCase(thunks.decrementAsync.rejected, (state, action) => {
+        state.status = "failed";
+      });
+  },
 });
 
 export const {
@@ -46,19 +57,6 @@ export const {
   setValue,
   setStatus,
 } = counterSlice.actions;
-
-export const incrementAsync = (): AppThunk => async (dispatch, getState) => {
-  dispatch(setStatus("loading"));
-  const response = await incrementAsynchronous(getState().counter.value);
-
-  if (response.status === 200) {
-    dispatch(setValue(response.data.value!));
-    dispatch(setStatus("idle"));
-  } else {
-    Alert.alert("Error", response.data.message!);
-    dispatch(setStatus("failed"));
-  }
-};
 
 export const selectCount = (state: RootState) => state.counter;
 

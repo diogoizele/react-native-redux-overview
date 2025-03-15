@@ -1,18 +1,29 @@
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import { selectCount } from "../../stores/toolkit/counterSlice";
+
+import { Colors } from "@/constants/Colors";
+import { selectCount } from "@/stores/toolkit/counterSlice";
 
 export const Loader = () => {
   const counterState = useSelector(selectCount);
 
-  if (counterState.status !== "loading") {
+  if (
+    counterState.toolkit.status !== "loading" &&
+    counterState.saga.status !== "loading"
+  ) {
     return null;
   }
 
   return (
     <View style={styles.container}>
-      <Text>teste</Text>
-      <ActivityIndicator size="large" color="#6203fc" />
+      <ActivityIndicator
+        size="large"
+        color={
+          counterState.saga.status === "loading"
+            ? Colors["light"].tabIconSelected.saga
+            : Colors["light"].tabIconSelected.toolkit
+        }
+      />
     </View>
   );
 };

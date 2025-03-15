@@ -1,10 +1,10 @@
+import { Colors } from "@/constants/Colors";
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   TouchableOpacityProps,
 } from "react-native";
-import { Colors } from "../../constants/Colors";
 
 interface ButtonProps extends TouchableOpacityProps {
   children: string;
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontSize: 16,
-    fontWeight: "bold",  
+    fontWeight: "bold",
   },
 });
