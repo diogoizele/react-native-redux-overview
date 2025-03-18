@@ -29,7 +29,7 @@ export default function TabTwoScreen() {
         <ThemedText type="title">Saga</ThemedText>
       </ThemedView>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="defaultSemiBold">Toolkit Counter:</ThemedText>
+        <ThemedText type="defaultSemiBold">Saga Counter:</ThemedText>
         <ThemedText>{counterState.saga.value}</ThemedText>
       </ThemedView>
       <ThemedView style={styles.actionContainer}>
@@ -59,6 +59,20 @@ export default function TabTwoScreen() {
         </Button>
         <Button type="saga" onPress={() => dispatch(CounterActions.reset())}>
           Reset
+        </Button>
+        <Button
+          type="saga"
+          onPress={() => dispatch(CounterActions.handleSomething())}
+        >
+          Handle Something
+        </Button>
+        <Button
+          type="saga"
+          onPress={() =>
+            dispatch(CounterActions.handleSomethingWithActionsHandler())
+          }
+        >
+          Handle Something With Action Handler
         </Button>
       </ThemedView>
     </ParallaxScrollView>
